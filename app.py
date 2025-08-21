@@ -20,14 +20,14 @@ from sklearn.preprocessing import minmax_scale
 import faiss
 from nltk.tokenize import word_tokenize
 # load fasiss
-faiss_index = faiss.read_index("index/faiss_index.idx")
+faiss_index = faiss.read_index("faiss_index.idx")
 
 # load pickel 
-with open("index/bm25_index.pkl", "rb") as f:
+with open("bm25_index.pkl", "rb") as f:
     bm25 = pickle.load(f)
 
 
-with open("index/chunks.pkl", "rb") as f:
+with open("chunks.pkl", "rb") as f:
     all_chunks = pickle.load(f)
 
 
