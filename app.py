@@ -135,14 +135,21 @@ def streamlit_main():
 
     st.subheader("📄 Training Documents")
 
-    col1, col2 = st.columns(2)
-    with col1:
-        st.write("**TCS 2023-24**")
-        show_pdf("TCS_2023-24.pdf", width=350, height=500)
+    # col1, col2 = st.columns(2)
+    # with col1:
+    #     st.write("**TCS 2023-24**")
+    #     show_pdf("TCS_2023-24.pdf", width=350, height=500)
 
-    with col2:
+    # with col2:
+    #     st.write("**TCS 2024-25**")
+    #     show_pdf("TCS_2024-25.pdf", width=350, height=500)
+
+    col1= st.columns(1)[0]
+
+    with col1:
         st.write("**TCS 2024-25**")
-        show_pdf("TCS_2024-25.pdf", width=350, height=500)
+        show_pdf("TCS_2024-25.pdf", width=700, height=600)
+
 
 
 # ------------------ CLI MAIN ------------------ #
