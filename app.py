@@ -4,7 +4,7 @@ import numpy as np
 import faiss
 import torch
 import streamlit as st
-from nltk.tokenize import word_tokenize
+#from nltk.tokenize import word_tokenize
 from sklearn.preprocessing import minmax_scale
 from rank_bm25 import BM25Okapi
 from sentence_transformers import SentenceTransformer
@@ -62,7 +62,12 @@ def hybrid_search(query: str, top_n: int = 5, alpha: float = 0.5, use_rrf=False)
     dense_results = [(int(idx), float(score)) for idx, score in zip(dense_indices[0], dense_scores[0])]
 
     # Sparse retrieval
-    sparse_scores = bm25.get_scores(word_tokenize(query_clean))
+    #sparse_scores = bm25.get_scores(word_tokenize(query_clean))
+    tokens = query_clean.split()
+
+    sparse_scores = bm25.get_scores(tokens)
+
+
     sparse_indices = np.argsort(sparse_scores)[::-1][:top_n]
     sparse_results = [(int(idx), float(sparse_scores[idx])) for idx in sparse_indices]
 
@@ -135,20 +140,34 @@ def streamlit_main():
 
     st.subheader("📄 Training Documents")
 
-    # col1, col2 = st.columns(2)
+    pdf_path = "TCS_2024-25.pdf"
+
+    # # Load PDF as base64
+    with open(pdf_path, "rb") as f:
+        base64_pdf = base64.b64encode(f.read()).decode("utf-8")
+
+    st.download_button(
+        label="📥 Download PDF",
+        data=open(pdf_path, "rb").read(),
+        file_name="TCS_2024-25.pdf",
+        mime="application/pdf"
+    )
+
+    # # Embed PDF viewer
+    pdf_display = f"""
+        <iframe src="data:application/pdf;base64,{base64_pdf}" 
+        width="100%" height="600" type="application/pdf"></iframe>
+    """
+    st.markdown(pdf_display, unsafe_allow_html=True)
+
+    # # Optional: download button
+   
+    
+#     col1= st.columns(1)[0]
+
     # with col1:
-    #     st.write("**TCS 2023-24**")
-    #     show_pdf("TCS_2023-24.pdf", width=350, height=500)
-
-    # with col2:
     #     st.write("**TCS 2024-25**")
-    #     show_pdf("TCS_2024-25.pdf", width=350, height=500)
-
-    col1= st.columns(1)[0]
-
-    with col1:
-        st.write("**TCS 2024-25**")
-        show_pdf("TCS_2024-25.pdf", width=700, height=600)
+    #     show_pdf("TCS_2024-25.pdf", width=700, height=600)
 
 
 
