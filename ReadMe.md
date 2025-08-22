@@ -8,3 +8,8 @@ python -m venv .venv
 
 pip install ipykernel
 python -m ipykernel install --user --name=conv_ai_env
+
+
+pip install -r requirements.txt
+
+streamlit run app.py
